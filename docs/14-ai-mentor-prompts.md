@@ -1,7 +1,10 @@
 > 来源：[飞书原文](https://zcnfzozvzo07.feishu.cn/wiki/NwBNwwYEDiGaIpk2VNDc310fnae)
 > 同步日期：2026-09-05
 
-# 14｜AI 导师 Prompt 库`n`n> 💡 **提示**`n> Prompt 是学习和协作工具，不是把判断外包出去的按钮。使用前去掉密钥、个人信息和不必要的业务原文；输出必须经过自己 Review 和运行验证。
+# 14｜AI 导师 Prompt 库
+
+> 💡 **提示**
+> Prompt 是学习和协作工具，不是把判断外包出去的按钮。使用前去掉密钥、个人信息和不必要的业务原文；输出必须经过自己 Review 和运行验证。
 
 # 需求澄清
 
