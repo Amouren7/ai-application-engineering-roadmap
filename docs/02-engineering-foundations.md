@@ -150,4 +150,60 @@ git log --oneline
 - 能区分 401、429、500 和本地代码错误；
 - 能阅读自己的 Git diff，并恢复到上一次提交。
 
+## 进一步小白练习
+
+## 手把手完成一个最小 Python 项目
+
+下面的任务只做“读取文本并统计信息”，不要加入模型。这样你能先练习软件工程，而不是把所有问题混在一起。
+
+### 第一步：准备目录
+
+```text
+mkdir ai-learning
+cd ai-learning
+python -m venv .venv
+```
+
+在 Windows PowerShell 中激活环境后，创建 `count_words.py` 和 `notes.txt`。如果你不懂目录，也可以把它理解成：先给这个项目准备一个独立抽屉，所有文件都放进这个抽屉。
+
+### 第二步：先写最小功能
+
+```python
+from pathlib import Path
+import sys
+
+path = Path(sys.argv[1])
+if not path.exists():
+    print(f"找不到文件：{path}")
+    raise SystemExit(1)
+
+text = path.read_text(encoding="utf-8")
+print("字符数：", len(text))
+print("行数：", len(text.splitlines()))
+```
+
+先运行成功，再增加词频。每增加一项能力就运行一次，这叫小步迭代。一次写完所有功能，出错时就很难知道是哪一行造成的。
+
+### 第三步：故意制造失败
+
+把文件名改成不存在的名字，输入空文件，再用不同编码保存一份文件。分别记录错误现象。你会发现“异常处理”不是抽象理论，而是提前替用户解释电脑为什么做不到。
+
+### 第四步：提交 Git
+
+```text
+git init
+git add count_words.py notes.txt
+git commit -m "feat: add text statistics cli"
+```
+
+然后添加空文件校验，再提交第二次。用 `git diff HEAD~1` 看第二次到底改了什么。
+
+## 学习代码时的四个问题
+
+看到一行陌生代码，不要马上要求 AI 改写。先问：它接收什么？返回什么？什么时候执行？失败会怎样？这四个问题比背语法更能帮助你读懂 AI 应用。
+
+## 本节验收
+
+请把项目交给一个没有看过代码的人运行。如果他只按照 README 就能完成安装、运行一个正常样例和一个失败样例，你的工程基础才算开始成形。
+
 > 下一步：进入 03，把这些基础连接成第一个 LLM 应用。
