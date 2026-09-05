@@ -1,111 +1,153 @@
-> 来源：[飞书原文](https://zcnfzozvzo07.feishu.cn/wiki/H103wWPNmimD1zkphxrc4iQNnmd)
-> 同步日期：2026-09-05
+> 飞书原文：[02｜AI 工程最低编程基础](https://zcnfzozvzo07.feishu.cn/wiki/H103wWPNmimD1zkphxrc4iQNnmd)
+> GitHub 教学版：面向零基础学习者的详细讲解
 
 # 02｜AI 工程最低编程基础
 
-> 💡 **提示**
-> 目标不是成为 Python 专家，而是遇到“请求失败、数据不对、程序卡住、结果变空、换机器不能运行”时，你能自己定位问题。
+> 这一章不是让你成为计算机专家，而是让你具备“能运行、能修改、能定位问题”的最低能力。
 
-# 本章解决什么问题
+## 你真正需要的基础是什么
 
-AI Coding Agent 可以快速写出代码，但它不能替你承担理解、验证和维护责任。本章建立 AI 应用工程的地基：Python 最小语法、CLI、HTTP、JSON、环境变量、异常、日志、数据库基本概念和 Git。
+AI 应用通常不是从零训练模型，而是把几个普通的软件模块接起来：读取输入、调用接口、解析 JSON、保存结果、处理异常、记录日志。只要其中一环不懂，出错时就只能反复重试。
 
-# 最小必要知识
+## 1. 认识命令行
 
-| 主题 | 你必须会什么 | 日常类比 |
-| --- | --- | --- |
-| Python | 变量、函数、列表、字典、模块、文件读写、虚拟环境 | 像把手工步骤写成可重复的工作说明书 |
-| CLI | 进入目录、创建环境、运行模块、查看帮助、读取退出码 | 像用文字指挥一个没有图形界面的同事 |
-| HTTP / REST | 理解 URL、方法、状态码、请求头、请求体、超时 | 像寄件地址、寄件动作、回执和包裹内容 |
-| JSON | 读写对象、数组、字符串、数字、布尔值和空值 | 像机器和人约定好的表格格式 |
-| 环境变量 | 把密钥、地址和环境差异放在代码外，不提交到 Git | 像把钥匙放进抽屉，不把钥匙刻在说明书上 |
-| 异常与日志 | 区分用户错误、网络错误、服务错误和程序错误；记录可检索上下文 | 像医院病历：只说“坏了”无法帮助下一位医生 |
-| 数据库 | 理解表、记录、主键、查询、事务和持久化 | 像有规则的档案柜，不是随手堆文件夹 |
-| Git | 提交、查看 diff、分支、回退到已知版本、写清提交信息 | 像给项目保留可比较的存档点 |
+命令行就是用文字告诉电脑做什么。你不需要一开始记住所有命令，只先会这几类：
 
-# 极简案例：API 健康检查 CLI
-
-需求：输入一个 API 地址，输出请求是否成功、耗时、状态码和错误原因。这个小工具会同时练习 CLI、HTTP、JSON、异常和日志。
-
-```python
-import json
-import logging
-import os
-import sys
-import time
-from urllib.request import Request, urlopen
-
-logging.basicConfig(level=os.getenv("LOG_LEVEL", "INFO"))
-
-def check(url):
-    started = time.perf_counter()
-    try:
-        request = Request(url, headers={"Accept": "application/json"})
-        with urlopen(request, timeout=10) as response:
-            body = response.read().decode("utf-8")
-        elapsed_ms = round((time.perf_counter() - started) * 1000)
-        return {"ok": True, "status": response.status, "elapsed_ms": elapsed_ms,
-                "json": json.loads(body)}
-    except Exception as exc:
-        logging.exception("health check failed")
-        return {"ok": False, "error_type": type(exc).__name__,
-                "message": str(exc)}
-
-if __name__ == "__main__":
-    target = sys.argv[1] if len(sys.argv) > 1 else os.getenv("CHECK_URL")
-    if not target:
-        raise SystemExit("usage: python healthcheck.py URL")
-    print(json.dumps(check(target), ensure_ascii=False, indent=2))
+```text
+pwd / Get-Location       我现在在哪个目录
+ls / Get-ChildItem       这里有哪些文件
+cd <目录>                进入目录
+python --version         查看 Python 是否可用
+git status               查看项目有没有未保存的修改
 ```
 
-# 跟着做
+如果命令失败，先看三件事：当前目录对不对、命令是否拼错、报错是“找不到程序”还是“程序运行失败”。
 
-1. 创建项目目录和虚拟环境，确认 python --version、python -m venv .venv 和激活命令能工作。
-2. 运行本地或可信测试地址，观察成功、超时、无效 JSON 和不存在地址四种结果。
-3. 用 Git 提交第一个可运行版本，再修改一处输出字段并查看 diff。
-4. 把 URL 从命令行参数改成“参数优先、环境变量兜底”，不要把密钥写进代码。
-5. 为结果加 request_id、开始时间、结束时间和错误类型；不要在日志里输出密钥或完整隐私数据。
+## 2. Python 只学一条可用主线
 
-# AI Coding 学习方法
+先理解变量、列表、字典、函数和循环。AI 应用里最常见的数据形态是字典和列表：
 
-先让 AI 只解释运行环境和文件结构，再让它实现一个最小函数。每次请求都指定“不引入框架、不改无关文件、给出测试命令”。AI 生成后，你必须自己回答：哪个函数负责网络？异常在哪里被捕获？返回 JSON 的 schema 是什么？退出码何时非零？
+```python
+document = {
+    "title": "学习笔记",
+    "text": "这里是一段文章内容",
+}
 
-# 自己修改
+def make_request(doc):
+    return {
+        "instruction": "请总结下面的文章",
+        "content": doc["text"],
+    }
 
-- 增加 timeout 参数，并说明参数校验失败时的退出码。
-- 把网络调用与结果格式化拆成两个函数，写一个不访问网络的单元测试。
-- 增加脱敏规则，确保日志中不会出现 Authorization、API key 或用户原文。
-- 用一次 Git 分支完成修改，合并前阅读完整 diff。
+request = make_request(document)
+print(request["content"])
+```
 
-# Debug 挑战
+类比：变量是贴了名字的盒子，列表是按顺序排好的盒子，字典是贴着不同标签的抽屉，函数是可以重复使用的小机器。
 
-| 现象 | 先查什么 |
-| --- | --- |
-| 程序提示找不到命令 | 当前目录、虚拟环境、解释器路径和文件名 |
-| 返回 401 / 403 | 身份、权限、请求头、环境变量是否加载；不要只重试 |
-| 返回 200 但解析失败 | 响应 Content-Type、原文形状和实际 JSON 层级 |
-| 偶尔超时 | 网络、服务端延迟、客户端 timeout、重试次数和重复副作用 |
-| 换机器不能运行 | Python 版本、依赖、环境变量、路径和 README 步骤 |
+先不要追求写得很“高级”。能读懂数据从哪来、经过哪个函数、变成什么样，就已经在建立工程能力。
 
-# 小项目：可复现的 API 调试包
+## 3. 虚拟环境和依赖
 
-交付一个包含 CLI、README、环境变量示例、脱敏日志、至少 5 个测试场景和 Git 历史的项目。README 必须写清：如何安装、如何运行、如何模拟失败、如何判断成功、哪些信息不能提交。
+不同项目可能需要不同版本的库。虚拟环境像给每个项目准备一个独立工具箱，避免项目之间互相污染。
 
-# 验收标准
+```text
+python -m venv .venv
+.
+venv\Scripts\Activate.ps1       Windows PowerShell
+python -m pip install openai
+python -m pip freeze > requirements.txt
+```
 
-- 能不用教程创建虚拟环境、运行模块、读取环境变量并提交 Git。
-- 能解释 HTTP 状态码、请求头、请求体、JSON 解析和 timeout 的关系。
-- 能根据日志和响应原文定位一次失败，而不是让 AI 猜。
-- 能写一个不依赖网络的测试，并说明它验证了哪条行为。
-- 能说出数据库何时比文件更合适，何时不值得引入。
+如果激活命令因系统策略失败，不要把问题误认为 Python 代码错误；先确认 Python 安装和 PowerShell 权限，再选择临时执行方式。
 
-# 自测与常见误区
+## 4. HTTP 和 JSON
 
-- 为什么 API key 不能写进代码或提交 Git？因为代码会被复制、日志会被收集、历史提交难以彻底清除。
-- 为什么“状态码 200”不等于业务成功？还要检查响应形状、字段、语义和下游校验。
-- 为什么重试不是万能修复？重复写操作可能造成重复订单、重复消息或成本增加。
-- 常见误区：把所有异常吞掉；日志只写“失败”；用浏览器能打开证明 API 正常；依赖无限增加；不保留可回退的 Git 提交。
+HTTP 是程序之间发消息的规则。一次 API 调用通常包含：地址、方法、请求头、请求体、状态码和响应体。
 
-# 下一步
+JSON 是一种结构化文本：
 
-进入 03，用 Python 调用模型 API，做出第一个可演示的文档分析应用。
+```json
+{
+  "question": "什么是 RAG？",
+  "language": "zh-CN",
+  "need_citation": true
+}
+```
+
+把它想成一张机器能读的表单。字段名写错、逗号漏掉、布尔值写成字符串，都可能导致调用失败或结果被误解。
+
+## 5. 环境变量和密钥
+
+API Key 是钥匙，不要写进代码、截图、公开 README 或聊天记录。程序通过环境变量读取：
+
+```python
+import os
+
+api_key = os.environ["OPENAI_API_KEY"]
+```
+
+如果程序提示缺少变量，先检查变量是否存在，再检查当前终端和 IDE 是否使用了同一个环境。不要为了“先跑起来”把真实密钥直接粘进代码。
+
+## 6. 异常、日志和状态码
+
+把错误分成三类会更容易排查：
+
+- **输入错误**：文件为空、字段缺失、格式不对；
+- **服务错误**：401 未授权、429 限流、500 上游故障；
+- **程序错误**：变量名写错、JSON 解析失败、路径不存在。
+
+最小的异常处理应该告诉用户发生了什么，也给日志留下上下文：
+
+```python
+import logging
+
+logging.basicConfig(level=logging.INFO)
+
+try:
+    result = call_model(request)
+except TimeoutError:
+    logging.exception("模型调用超时")
+    print("服务响应较慢，请稍后重试")
+```
+
+不要用一个宽泛的 `except Exception: pass` 把所有错误吞掉。那会让程序表面不崩，实际却没有留下任何线索。
+
+## 7. Git 是你的后悔药
+
+Git 不只是上传 GitHub，它首先是一个“可回到过去的修改记录”。每天至少形成一次清晰提交：
+
+```text
+git init
+git add .
+git commit -m "feat: add document input"
+git status
+git log --oneline
+```
+
+提交信息要说明“改了什么”，不要只写“update”。在让 AI 改代码后，先看 diff，再提交；这样你能知道哪些改动是自己接受的。
+
+## 小项目：做一个文本统计 CLI
+
+目标：运行 `python count_words.py notes.txt`，输出字符数、行数和前 5 个高频词。
+
+验收要求：
+
+1. 文件不存在时给出清楚提示；
+2. 空文件不会崩溃；
+3. 结果可以重复运行；
+4. 用 Git 提交至少两次，第二次专门修复一个你故意制造的错误。
+
+## 常见卡点排查顺序
+
+当代码不能运行时，不要马上问 AI“为什么”。先记录：执行的完整命令、当前目录、输入样例、完整报错、你刚改了什么。然后按“输入 → 代码 → 外部服务 → 输出”的顺序逐段排除。
+
+## 本章验收
+
+- 能进入项目目录并运行 Python 文件；
+- 能读写一个字典和 JSON；
+- 能解释环境变量为什么比硬编码安全；
+- 能区分 401、429、500 和本地代码错误；
+- 能阅读自己的 Git diff，并恢复到上一次提交。
+
+> 下一步：进入 03，把这些基础连接成第一个 LLM 应用。
