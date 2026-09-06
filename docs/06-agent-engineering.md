@@ -1,7 +1,19 @@
-> 飞书原文：[06｜Agent Engineering](https://zcnfzozvzo07.feishu.cn/wiki/XLXVwMlDgiPiMik7KCmcVf6gnde)
+> 飞书原文：[06｜智能体工程（Agent）](https://zcnfzozvzo07.feishu.cn/wiki/XLXVwMlDgiPiMik7KCmcVf6gnde)
 > GitHub 教学版：面向零基础学习者的详细讲解
 
-# 06｜Agent Engineering
+# 06｜智能体工程（Agent）
+
+## 本章开始前：准备与产出
+
+| 项目 | 说明 |
+|-|-|
+| Python | 需要；至少能读懂循环、函数、字典和异常处理 |
+| API Key | 工程路线需要；体验路线可先在智能体平台观察运行轨迹 |
+| 安装软件 | 沿用前面环境；先手写最小 Agent Loop，再选框架 |
+| 能否只用网页工具 | 可以体验，但停止条件、重试和权限必须能落到可检查的规则 |
+| 本章产出 | 一个有状态、工具调用上限、停止条件、重试和人工接管的最小 Agent |
+
+Agent 不是“更聪明的聊天框”，而是能在边界内循环做决定的程序。先学会让它安全地停下来，再考虑让它做更多事。
 
 > Agent 不是“Prompt 写得更长”，而是一个有状态、会选择下一步、可以调用工具并在条件满足时停止的系统。
 

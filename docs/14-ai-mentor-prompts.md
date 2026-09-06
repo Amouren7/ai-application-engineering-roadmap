@@ -1,7 +1,19 @@
-> 飞书原文：[14｜AI 导师 Prompt 库](https://zcnfzozvzo07.feishu.cn/wiki/NwBNwwYEDiGaIpk2VNDc310fnae)
+> 飞书原文：[14｜AI 学习导师提示词库](https://zcnfzozvzo07.feishu.cn/wiki/NwBNwwYEDiGaIpk2VNDc310fnae)
 > GitHub 教学版：面向零基础学习者的详细讲解
 
-# 14｜AI 导师 Prompt 库
+# 14｜AI 学习导师提示词库
+
+## 本章开始前：准备与产出
+
+| 项目 | 说明 |
+|-|-|
+| Python | 不需要；本章是提示词和学习协作工具箱 |
+| API Key | 不需要；使用你已有的聊天工具即可 |
+| 安装软件 | 不需要 |
+| 能否只用网页工具 | 可以，建议直接复制模板做一次练习 |
+| 本章产出 | 一组能让 AI 解释、提问、评审、Debug 和复盘的提示词模板 |
+
+提示词不能替代判断。每次都要求 AI 说明假设、证据、风险和不确定性，并由你决定是否接受建议。
 
 > 好 Prompt 不只是“请帮我写代码”，而是让 AI 按正确的学习顺序帮助你：先澄清，再解释，再实现，再验证。
 

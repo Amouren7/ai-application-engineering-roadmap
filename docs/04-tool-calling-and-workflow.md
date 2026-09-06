@@ -1,7 +1,19 @@
-> 飞书原文：[04｜Tool Calling 与 Workflow](https://zcnfzozvzo07.feishu.cn/wiki/KHTywpgPkivbUckmaTGcaVAjnMc)
+> 飞书原文：[04｜工具调用与工作流（Tool Calling / Workflow）](https://zcnfzozvzo07.feishu.cn/wiki/KHTywpgPkivbUckmaTGcaVAjnMc)
 > GitHub 教学版：面向零基础学习者的详细讲解
 
-# 04｜Tool Calling 与 Workflow
+# 04｜工具调用与工作流（Tool Calling / Workflow）
+
+## 本章开始前：准备与产出
+
+| 项目 | 说明 |
+|-|-|
+| Python | 需要；本章要把工具、状态和分支写成可检查的程序 |
+| API Key | 工程路线需要；也可以先在 Dify、扣子或 n8n 中观察可视化流程 |
+| 安装软件 | 沿用 02、03 章环境；暂时不需要安装复杂 Agent 框架 |
+| 能否只用网页工具 | 可以体验流程，但程序验收必须回到代码或流程日志 |
+| 本章产出 | 一个有明确输入、工具 schema、分支、重试和人工确认点的工作流 |
+
+把工作流想成固定路线的办事流程：模型可以填写表单，但程序决定哪些步骤能走、什么情况必须停。
 
 > 本章解决一个关键问题：模型可以提出“下一步想做什么”，但怎样保证真正执行时参数正确、步骤可控、危险动作有人确认？
 

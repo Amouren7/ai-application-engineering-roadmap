@@ -4,13 +4,51 @@
 
 ## 建议阅读方式
 
-不要一次读完整个仓库。每天只完成一章中的一个小任务，并留下运行结果、失败记录或一段自己的解释。
+不要一次读完整个仓库。每天只完成一章中的一个小任务，并留下运行结果、失败记录或一段自己的解释。第一次学习时，请先读完下面的“环境准备”，再进入 00。
 
 1. 先读 00，确定起点和项目方向；
 2. 按 01 → 10 逐章学习；
 3. 遇到术语查 11，遇到故障查 12；
 4. 用 13 记录证据，用 14 让 AI 做导师和审查者；
 5. 用 15 学习真实仓库，用 16 跟踪生态变化。
+
+## 开始前：先选一条路线
+
+你不需要一开始就同时安装所有工具。整套路线分成两条可以互相切换的路线：
+
+| 路线 | 适合谁 | 主要工具 | 能先学什么 |
+|-|-|-|-|
+| 体验路线 | 只想先理解 AI 应用怎么工作的人 | 浏览器、扣子、Dify 或 n8n | 先做 Prompt、Workflow、知识库和 Agent 的可视化实验，不要求先写 Python |
+| 工程路线 | 想自己开发、排错和交付项目的人 | Python、编辑器、命令行、Git、模型 API | 从 02 开始补基础，再用 Python 调 API、读日志、写测试和部署 |
+
+体验路线不是“低配版”，它适合先建立整体感觉；但如果你要做能修改、能排错、能部署的项目，最终仍要进入工程路线。
+
+## 环境准备清单
+
+在真正动手前，准备下面这些东西即可：
+
+| 项目 | 是否必须 | 小白说明 |
+|-|-|-|
+| 浏览器和一个可用的 AI 工具 | 必须 | 用来完成体验路线、查资料和请 AI 解释代码 |
+| Python 3.11 或更新版本 | 工程路线必须 | 02 章会带你安装；不会 Python 也可以先读 00、01 |
+| 一个代码编辑器 | 工程路线必须 | VS Code、Cursor 或你熟悉的编辑器都可以 |
+| 命令行 | 工程路线必须 | Windows 使用 PowerShell；它只是用文字告诉电脑执行命令 |
+| Git | 从 02 开始需要 | 用来保存版本、回看修改、恢复到能运行的版本 |
+| 模型 API Key | 03 章开始通常需要 | 只有实际调用云端模型才需要；体验路线可暂时不配置 |
+| Docker、向量数据库、云服务器 | 暂时不需要 | 等到 05、08、09 章确实遇到再安装，不要提前增加复杂度 |
+
+Windows 可以先在 PowerShell 中逐行检查：
+
+```powershell
+python --version
+git --version
+```
+
+如果其中一条提示“不是内部或外部命令”，不要继续猜。先进入 02 章对应的小节，安装后重新打开 PowerShell，再执行一次检查。第一次成功不要求你懂原理，只要能看到版本号即可。
+
+## 每章开头的准备标识怎么看
+
+每一章开头都会明确写出：是否需要 Python、是否需要 API Key、是否要安装软件、能否只用网页工具，以及本章最后要留下什么成果。看到“可选”时，不要把它误读成“现在必须学会”；先完成本章的最小验收，再回头加深。
 
 ## 贯穿案例
 
@@ -42,18 +80,18 @@
 - [01｜AI 与 Agent 基础认知](docs/01-ai-and-agent-basics.md)
 - [02｜AI 工程最低编程基础](docs/02-engineering-foundations.md)
 - [03｜构建第一个 LLM 应用](docs/03-first-llm-application.md)
-- [04｜Tool Calling 与 Workflow](docs/04-tool-calling-and-workflow.md)
-- [05｜RAG 与企业知识库](docs/05-rag-and-knowledge-base.md)
-- [06｜Agent Engineering](docs/06-agent-engineering.md)
-- [07｜Skill / MCP / 外部系统集成](docs/07-skill-mcp-and-integrations.md)
+- [04｜工具调用与工作流（Tool Calling / Workflow）](docs/04-tool-calling-and-workflow.md)
+- [05｜检索增强生成与知识库（RAG）](docs/05-rag-and-knowledge-base.md)
+- [06｜智能体工程（Agent）](docs/06-agent-engineering.md)
+- [07｜技能、MCP 与外部系统集成](docs/07-skill-mcp-and-integrations.md)
 - [08｜生产级 AI 应用工程](docs/08-production-ai-engineering.md)
 - [09｜完整项目实战](docs/09-project-practice.md)
 - [10｜GitHub 作品集与求职](docs/10-github-portfolio-and-career.md)
 - [11｜AI 应用工程词典](docs/11-ai-application-glossary.md)
 - [12｜常见错误与避坑指南](docs/12-common-errors-and-pitfalls.md)
 - [13｜学习进度与打卡](docs/13-learning-progress.md)
-- [14｜AI 导师 Prompt 库](docs/14-ai-mentor-prompts.md)
-- [15｜推荐项目与开源项目阅读](docs/15-projects-and-open-source.md)
+- [14｜AI 学习导师提示词库](docs/14-ai-mentor-prompts.md)
+- [15｜推荐项目与开源项目阅读方法](docs/15-projects-and-open-source.md)
 - [16｜持续更新记录](docs/16-update-log.md)
 
 ## 原始协作版本
